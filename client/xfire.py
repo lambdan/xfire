@@ -30,13 +30,13 @@ def get_running_exes(): # https://www.geeksforgeeks.org/python-get-list-of-runni
 	return exes
 
 
-gamelines = [line.rstrip() for line in open('games.txt')]
+gamelines = [line.rstrip() for line in open('games.tsv', mode="r", encoding="utf-8")]
 
 TRACKED_GAMES = []
 GAME_NAMES = []
 for line in gamelines:
-	GAME_NAMES.append(line.split(",")[0])
-	TRACKED_GAMES.append(line.split(",")[1])
+	GAME_NAMES.append(line.split("\t")[0])
+	TRACKED_GAMES.append(line.split("\t")[1])
 
 RUNNING_GAMES = []
 TIME_STARTED = []

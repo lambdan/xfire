@@ -1,7 +1,0 @@
-Counter-Strike 2,cs2.exe
-osu!,osu!.exe
-The Sims 3,TS3W.exe
-Beat Saber,Beat Saber.exe
-Control,Control.exe
-Control,Control_DX11.exe
-Control,Control_DX12.exe
