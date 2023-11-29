@@ -1,0 +1,14 @@
+# open up the javascript console on your steam profile page and do something like this to get all the data
+# (their class names might change)
+
+var names = document.body.getElementsByClassName('gameslistitems_GameName_22awl');
+var namesString = '';
+for (var i = 0; i < names.length; i++) namesString += (names[i].innerText + '\n');
+
+var times = document.body.getElementsByClassName('gameslistitems_Hours_26nl3');
+var timesString = '';
+for (var i = 0; i < times.length; i++) timesString += (times[i].innerText + '\n');
+
+var dates = document.body.getElementsByClassName('gameslistitems_LastPlayed_2jglu');
+var datesString = '';
+for (var i = 0; i < dates.length; i++) datesString += (dates[i].innerText + '\n');
