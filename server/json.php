@@ -5,11 +5,13 @@ $result = $db->query("SELECT * FROM games");
 $data = array();
 
 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    $row['last_played_human'] = date('Y-m-d H:i:s', $row['last_played']);
+//	$row['last_played_datetime'] = date('Y-m-d H:i:s', $row['last_played']);
+//	$row['last_played_date'] = date('Y-m-d', $row['last_played']);
+
     $row['last_played_timestamp'] = $row['last_played'];
-    $row['time_played_hours'] = $row['time_played'] / 3600;
-    $row['time_played_seconds'] = $row['time_played'];
+    $row['time_played_as_seconds'] = $row['time_played'];
     unset($row['time_played']); // remove original time_played (its the same as _seconds)
+    unset($row['last_played']);
     $data[] = $row;
 }
 
