@@ -12,11 +12,11 @@ function Start() // runs when page is loaded
     // refresh every 30s
     window.setInterval(function() {
         GrabJSON();
-    }, 30000);
+    }, 60000);
 
-    window.setInterval(function() {
+    /*window.setInterval(function() {
         Refresh();
-    }, 1000);
+    }, 1000);*/
 }
 
 function GotJSON() // runs when we got the json
@@ -31,6 +31,8 @@ function Refresh()
         SortByMostRecent();
     } else if (Mode == 1){
         SortByMostPlayed();
+    } else if (Mode == 2){
+        SortAlphabetically();
     }
 
 }
@@ -108,10 +110,10 @@ function GenerateHTML()
                 output += '<th scope="row">' + (id+1) + '</th>';
             }
             output += '<td>' + game.game_name + '</td>';
-            output += '<td>' + SecsToPretty(game.time_played_as_seconds) + '</td>';
+            output += '<td title="' + game.time_played_as_seconds + ' secs">' + SecsToPretty(game.time_played_as_seconds) + '</td>';
 
             if(IsPlayingNow(game.last_played_timestamp)) {
-                output += '<td>playing now</td>';
+                output += '<td><b>playing now</b></td>';
             } else {
                 output += '<td title="' + TimestampToHuman(game.last_played_timestamp) + '">' + TimeSince(game.last_played_timestamp) + '</td>';
             }
@@ -130,12 +132,19 @@ function GenerateHTML()
 
 function SecsToPretty(secs)
 {
-    if(secs > 3600) {
-        return Math.floor(secs / 3600) + " hrs";
-    } else if (secs > 60) {
-        return Math.floor(secs / 60) + " mins";
+    var hours = Math.floor(secs / 3600);
+    if(hours > 0){
+        if(hours==1){return "1 hour";}
+        return hours + " hours";
     }
-    return secs + " secs";
+
+    var mins = Math.floor(secs / 60);
+    if(mins > 0){
+        if(mins==1){return "1 minute";}
+        return mins + " minutes";
+    }
+
+    return "<1 minute";
 
 }
 
@@ -171,36 +180,35 @@ function TimeSince(ts)
         return "?";
     }
 
+    var years = Math.floor(delta / (365*24*3600));
+    var days = Math.floor(delta / (24*3600));
     var hours = Math.floor(delta / 3600);
-    delta %= 3600;
     var mins = Math.floor(delta / 60);
-    delta %= 60;
-    var secs = Math.floor(delta);
 
-    if(hours > (24*365))
+    if(years > 0)
     {
-        var years = Math.floor(hours / (24*365));
-        if(years == 1){
-            return "1 year ago";
-        } else {
-            return years + " years ago";
-        }
+        if(years==1){return "1 year ago";}
+        return years + " years ago";
     }
 
-    if(hours > 48){
-        return Math.floor(hours / 24) + " days ago"
+    if(days > 0)
+    {
+        if(days==1){return "1 day ago";}
+        return days + " days ago";
     }
 
 
     if(hours > 0){
-        return hours + "h " + mins + "m " + secs + "s ago";
+        if(hours==1){return "1 hour ago";}
+        return hours + " hours ago";
     }
 
     if(mins > 0){
-        return mins + "m " + secs + "s ago";
-
+        if(mins==1){return "1 minute ago";}
+        return mins + " minutes ago";
     }
-    return secs + "s ago";
+
+    return "<1 minute ago";
 }
 
 
