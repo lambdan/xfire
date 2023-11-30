@@ -83,38 +83,44 @@ function SortAlphabetically()
 
 function GenerateHTML()
 {
-    var output = '';
-    output += '<ul class="list-group';
-    if (bNumberedList) { // should it be a numbered list?
-        output += ' list-group-numbered';
-    }
-    output += '">';
+    var output = '<table class="table">';
 
+    output += '<thead>';
+        output += '<tr>';
+            if(bNumberedList) {
+                output += '<th scope="col">#</th>';
+            }
+            output += '<th scope="col">Game</th>';
+            output += '<th scope="col">Played</th>';
+            output += '<th scope="col">Last Played</th>';
+        output += '</tr>';
+    output += '</thead>';
+
+    output += '<tbody>';
 
     $.each(JSON_SORTED, function(id,game) {
-        output += '<li class="list-group-item d-flex justify-content-between align-items-start';
         if(IsPlayingNow(game.last_played_timestamp)){
-            output += ' active';
+            // mark row as active
         }
-        output += '">';
-            output += '<div class="ms-2 me-auto">';
-                output += '<div class="fw-bold">' + game.game_name + '</div>';
-                    output += '' + SecsToPretty(game.time_played_as_seconds) + '';
-            output += '</div>';
-        output += '<small title="' + TimestampToHuman(game.last_played_timestamp) + '">';
-            if(IsPlayingNow(game.last_played_timestamp))
-            {
-                output += "playing now...";
+
+        output += '<tr>';
+            if(bNumberedList){
+                output += '<th scope="row">' + (id+1) + '</th>';
             }
-            else
-            {
-                output += 'Last played: ' + TimeSince(game.last_played_timestamp) + '';
+            output += '<td>' + game.game_name + '</td>';
+            output += '<td>' + SecsToPretty(game.time_played_as_seconds) + '</td>';
+
+            if(IsPlayingNow(game.last_played_timestamp)) {
+                output += '<td>playing now</td>';
+            } else {
+                output += '<td title="' + TimestampToHuman(game.last_played_timestamp) + '">' + TimeSince(game.last_played_timestamp) + '</td>';
             }
-        output += '</small>';
-        output += '</li>';
+
+        output += '</tr>';
     });
 
-    output += '</ul>';
+    output += '</tbody>';
+    output += '</table>';
     $('#game-list').html(output);
 
     // end stats section
