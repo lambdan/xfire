@@ -37,6 +37,28 @@ function Refresh()
 
 }
 
+function RefreshButtonStates()
+{
+	switch(Mode){
+		case 0:
+			$("#btn_sort_recency").addClass("active");
+			$("#btn_sort_mostplayed").removeClass("active");
+			$("#btn_sort_alphabetically").removeClass("active");
+			break;
+		case 1:
+			$("#btn_sort_recency").removeClass("active");
+			$("#btn_sort_mostplayed").addClass("active");
+			$("#btn_sort_alphabetically").removeClass("active");
+			break;
+		case 2:
+			$("#btn_sort_recency").removeClass("active");
+			$("#btn_sort_mostplayed").removeClass("active");
+			$("#btn_sort_alphabetically").addClass("active");
+			break;
+		default:
+			break;
+	}
+}
 
 function SortByMostPlayed()
 {
@@ -48,6 +70,8 @@ function SortByMostPlayed()
     });
 
     GenerateHTML();
+
+	RefreshButtonStates();
 }
 
 
@@ -61,6 +85,7 @@ function SortByMostRecent()
     });
 
     GenerateHTML();
+	RefreshButtonStates();
 }
 
 function SortAlphabetically()
@@ -79,6 +104,7 @@ function SortAlphabetically()
         return 0;
     });
     GenerateHTML();
+	RefreshButtonStates();
 }
 
 
