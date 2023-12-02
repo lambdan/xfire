@@ -20,9 +20,26 @@ Make sure whatever user/group that runs your webserver has access to the folder 
 
 ## Client
 
-- Python 3
+- Written in C++
+- Uses libcurl
 
-Pretty barebones for now. Doesn't need any pip libraries I think?
+Reads games from a `.tsv` file, where the format is this:
+
+```
+Game Title  game.exe
+Red Dead Redemption 2  RDR2.exe
+```
+
+i.e. `Game Title<TAB>Executable`
+
+Also needs a valid `config.ini`:
+
+```
+baseurl=https://someaddr.com/submit.php // this is where we will submit (&game=, &duration=, &timestamp= will be appended)
+interval=15 // how often to check for running games and submitting
+gamesfile=games.tsv // the tsv file explained above
+verbose=true // prints alot of stuff
+```
 
 # Pro-tips
 
