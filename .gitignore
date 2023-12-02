@@ -1,0 +1,7 @@
+﻿.idea
+*.tlog
+*.pdb
+*.log
+client_cpp/ConsoleApplication1/x64/Debug
+client_cpp/x64/Debug/ConsoleApplication1.exe
+client_cpp/build
